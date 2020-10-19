@@ -1,5 +1,8 @@
 import home from './home';
 import history from './history';
+import food from './food';
+import cooking from './cooking';
+import testimonial from './testimonial';
 
 const renderNav = (() => {
 
@@ -40,10 +43,24 @@ const renderNav = (() => {
         });
         navBarWrapper.appendChild(tabFragment);
 
-        //set the text content of each nav bar tab
+        let tabIsActive = (e) => {
+            e.target.setAttribute('class', 'tab-active');
+        };
+
+        let otherTabsInactive = () => {
+            navTabs.forEach((tab) => {
+                tab.classList.remove('tab-active');
+            })
+        }
+
+        //set the text content of each nav bar tab and add logic for style change on click
         let navTabs = [...navBarWrapper.children];
         for(let i = 0; i < textContentArray.length; i++) {
             navTabs[i].textContent = textContentArray[i];
+            navTabs[i].addEventListener('click', (e) => {
+                otherTabsInactive();
+                tabIsActive(e);
+            })
         }
     
         //render the navbar and the maincontent on load
@@ -60,16 +77,34 @@ const renderNav = (() => {
 
         //testing home module
         let homeTest = document.getElementById('title');
+        homeTest.setAttribute('class', 'tab-active');
         homeTest.addEventListener('click', () => {
             clearActiveTab();
             home();
         })
+
+        let foodTab = document.getElementById('our-food');
+        foodTab.addEventListener('click', () => {
+            clearActiveTab();
+            food();
+        })
+
+        let cookingTab = document.getElementById('cooking');
+        cookingTab.addEventListener('click', () => {
+            clearActiveTab();
+            cooking();
+        })
+
+        let testimonialTab = document.getElementById('testimonial');
+        testimonialTab.addEventListener('click', () => {
+            clearActiveTab();
+            testimonial();
+        })
+
     }
 
-    
-    
-
     return {navBar};
+
 })();
 
 renderNav.navBar();
